@@ -6,18 +6,45 @@
             "id": "596d665c-97ea-4307-bb62-aa1acc723672",
             "actions": [
                 {
-                    "name": "Select",
-                    "type": "Button",
-                    "id": "09ee2188-2510-4e0d-b585-7e3ac6af7f58",
-                    "expectedControlType": "Button",
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "0ea62c83-2089-4413-9162-d8850bfc1578",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Unselect",
+                    "name": "Touch0_pos",
+                    "type": "Value",
+                    "id": "854955b6-d6be-490c-80d8-3ade1718d1f9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Touch1_pos",
+                    "type": "Value",
+                    "id": "b056f1a1-ac66-491e-84a1-75e14a4ef05b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Touch0_contact",
                     "type": "Button",
-                    "id": "8d17f287-8313-48e5-acb9-c7c06b4c402b",
+                    "id": "7129fc45-54d8-4d13-8dde-045dfe5cb5c5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Touch1_contact",
+                    "type": "Button",
+                    "id": "d7ec0507-42ad-4ac7-9d40-1b059022be0d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -27,45 +54,78 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "507e89bf-e554-4ea2-8c76-23444e793eab",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "id": "ddaf2ee0-190e-4941-9fa7-4e17ae3fed2c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Mouse",
-                    "action": "Select",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "aa54b92f-9e52-4f66-806a-648ec9737494",
-                    "path": "",
+                    "id": "63b4bb72-b8d8-4360-ab78-152ea90e49f5",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Touch0_pos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9192f5c-1fef-4596-9fa3-e2f453a015b6",
+                    "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Mobile",
-                    "action": "Select",
+                    "action": "Touch0_pos",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e8a0de2c-b656-4b8e-89df-afbbcc1b954f",
-                    "path": "<Mouse>/press",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Mouse",
-                    "action": "Unselect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ad9a7bc-2e75-4e58-a66e-80dc0d683046",
-                    "path": "",
+                    "id": "2005b7be-ce5b-4e0f-b55d-76b61f013eaa",
+                    "path": "<Touchscreen>/touch1/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Unselect",
+                    "groups": "Mobile",
+                    "action": "Touch1_pos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ec27441-a1e5-45f0-bf52-08b8fb1774dc",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Touch0_contact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18f41f64-fb07-4d0b-a815-83425ffa821e",
+                    "path": "<Touchscreen>/touch0/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Touch0_contact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5e6ebb8-4494-42c9-a4d8-51f50540d964",
+                    "path": "<Touchscreen>/touch1/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Touch1_contact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
