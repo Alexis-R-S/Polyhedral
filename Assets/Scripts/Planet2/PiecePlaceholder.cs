@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class PiecePlaceholder : MonoBehaviour
 {
-    // public TouchDetector Detector {get; private set;}
+    public Planet belongs_planet = null;
+    public Piece piece = null;
     PiecePlaceholder[] adjacents;
-    public Piece piece;
+
+    void Awake() {
+        if (belongs_planet == null) {
+            belongs_planet = transform.parent.GetComponent<Planet>();
+        }
+        if (piece != null) {
+            piece.placeholder = this;
+        }
+        piece.Init();
+    }
 
     public void SetPiece(PiecePlaceholder placeholder) {
         SetPiece(placeholder.piece);

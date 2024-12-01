@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Requires collider
+[RequireComponent(typeof(Collider))]
 public class TouchDetector : MonoBehaviour
 {
     [SerializeField] PieceGroup[] affectedGroups;

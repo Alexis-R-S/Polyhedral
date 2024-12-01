@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - NoRotation
+  - Index detector
+  - Test ray caster
   layers:
   - Default
   - TransparentFX
