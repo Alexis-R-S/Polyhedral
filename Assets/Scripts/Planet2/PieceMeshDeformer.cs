@@ -113,7 +113,20 @@ public class PieceMeshDeformer
     // progression depends on where the edge E is located between the two corners.
     // example: C1 - - - - - - E - - C2    : progression is 0,7 (70 %)
     private float getEdgeHeight(int height_corner1, int height_corner2, float progression) {
-        return progression*height_corner2*HEIGHT_UNIT + (1-progression)*height_corner1*HEIGHT_UNIT;
+        // Weighted average of height 2 and height 2.
+        // Weight is exp(K*progression) and exp(K*(1-progression)), K>0
+        float k=10;
+        float weight = Mathf.Exp(-k*progression);
+        float sumOfWeights = weight;
+        float weightedSum = height_corner1*weight;
+
+        weight = Mathf.Exp(-k*(1-progression));
+        sumOfWeights += weight;
+        weightedSum += height_corner2*weight;
+        Debug.Log((weightedSum / sumOfWeights) + "  " + progression);
+        return HEIGHT_UNIT*(weightedSum / sumOfWeights);
+
+        // return progression*height_corner2*HEIGHT_UNIT + (1-progression)*height_corner1*HEIGHT_UNIT;
     }
 
     // Applies orthogonal projection of point on the plane of the mesh

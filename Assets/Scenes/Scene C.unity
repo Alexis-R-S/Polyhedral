@@ -277,7 +277,7 @@ Transform:
   m_GameObject: {fileID: 799843610}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1.5, z: -0.5}
+  m_LocalPosition: {x: -1, y: 1, z: -1}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -765,7 +765,7 @@ PrefabInstance:
     - target: {fileID: 2411190973874709016, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: heights.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2411190973874709016, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
@@ -775,7 +775,7 @@ PrefabInstance:
     - target: {fileID: 2411190973874709016, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: cornersHeights.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2763243742893282103, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
@@ -990,12 +990,17 @@ PrefabInstance:
     - target: {fileID: 6393490913980597511, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: heights.Array.data[0]
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6393490913980597511, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: cornersHeights.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6393490913980597511, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
+        type: 3}
+      propertyPath: cornersHeights.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6459888444950896217, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
@@ -1010,7 +1015,7 @@ PrefabInstance:
     - target: {fileID: 6568240706436225704, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: heights.Array.data[0]
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6568240706436225704, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
@@ -1041,6 +1046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cornersHeights.Array.data[0]
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568240706436225704, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
+        type: 3}
+      propertyPath: cornersHeights.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6606321474803276497, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
