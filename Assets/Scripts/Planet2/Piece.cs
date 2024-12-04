@@ -28,8 +28,8 @@ public class Piece : MonoBehaviour
             Mesh m = FileLoader.LoadBaseMesh(placeholder.belongs_planet.Type, pieceType);
             Vector3[] verts = m.vertices;
             for (int i=0; i<verts.Length; i++) {
-                Debug.DrawRay(transform.position+verts[i], Vector3.up, Color.red, 10000);
-                if (Physics.Raycast(transform.position+verts[i], Vector3.up, out RaycastHit hit))
+                Debug.DrawRay(transform.TransformPoint(transform.localPosition+verts[i]), transform.rotation*Vector3.up, Color.red, 10000);
+                if (Physics.Raycast(transform.TransformPoint(transform.localPosition+verts[i]), transform.rotation*Vector3.up, out RaycastHit hit))
                     if (hit.collider.CompareTag("Index detector")) {
                         Debug.Log("Index: " + i);
                     }

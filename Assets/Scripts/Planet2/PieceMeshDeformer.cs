@@ -11,11 +11,15 @@ public class PieceMeshDeformer
     public const float HEIGHT_UNIT = 0.1f;
     int[] noticableVertices;    // Indices of noticable vertices
     int[] iCorners;     // Indices of corners
+    public Vector3 planeNormal;
+    public float planeOrigin;
 
 
     public PieceMeshDeformer(MeshInfo meshInfo) {
         noticableVertices = meshInfo.noticableVertices;
         iCorners = meshInfo.iCorners;
+        planeNormal = meshInfo.planeNormal.normalized;
+        planeOrigin = meshInfo.planeOrigin* meshInfo.planeNormal.magnitude;
     }
 
 
@@ -114,12 +118,15 @@ public class PieceMeshDeformer
 
     // Applies orthogonal projection of point on the plane of the mesh
     private Vector3 toPlane(Vector3 point) {
-        // Project point to plane xz (y=0)
-        return new Vector3(point.x, 0, point.z);
+        // Project point to plane
+        float projector = (planeNormal.x*point.x + planeNormal.y*point.y + planeNormal.z*point.z + planeOrigin)
+                        / (Mathf.Pow(planeNormal.x, 2) + Mathf.Pow(planeNormal.y, 2) + Mathf.Pow(planeNormal.z, 2));
+
+        return new Vector3(point.x - planeNormal.x*projector, point.y - planeNormal.y*projector, point.z - planeNormal.z*projector);
     }
 
     private Vector3 setHeightToPlane(Vector3 point, float height) {
-        return new Vector3(point.x, height, point.z);
+        return toPlane(point) + height*planeNormal;
     }
 
     private float getWeight(Deformation defType, float distance) {

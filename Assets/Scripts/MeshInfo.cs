@@ -6,4 +6,6 @@ public class MeshInfo
 {
     public int[] noticableVertices;
     public int[] iCorners;
+    public Vector3 planeNormal;
+    public float planeOrigin;
 }
