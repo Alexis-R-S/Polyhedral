@@ -146,6 +146,65 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4fd9d85b50e99664a9af688513404d4c, type: 2}
+--- !u!1 &451682903729792249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5002183118707843011}
+  - component: {fileID: 1690995474930002135}
+  m_Layer: 0
+  m_Name: Group RO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5002183118707843011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451682903729792249}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4588429009544970771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1690995474930002135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451682903729792249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb73f5fd7d1d0e4897be5d370d1e3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  belongs_planet: {fileID: 6345044113055212709}
+  swaps:
+  - placeholders:
+    - {fileID: 6336484069437471887}
+    - {fileID: 2297202317987092719}
+    - {fileID: 3307911106680319558}
+    - {fileID: 4420082543725517588}
+  - placeholders:
+    - {fileID: 5727454501971457731}
+    - {fileID: 7113830276921194333}
+    - {fileID: 6477354125068295733}
+    - {fileID: 1064697846426282270}
+  cutPieces: []
+  rotationAngle: 90
+  animationDuration: 2
 --- !u!1 &576011923837901304
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,6 +407,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1067115958041480239}
+  - {fileID: 4004964993023263416}
+  - {fileID: 5002183118707843011}
   - {fileID: 3887235256673899017}
   - {fileID: 1055623314121805695}
   - {fileID: 2174384671143968746}
@@ -537,8 +599,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5857809705094052990}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &4035338739187764682
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -855,6 +919,65 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4fd9d85b50e99664a9af688513404d4c, type: 2}
+--- !u!1 &1773879044758761663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1067115958041480239}
+  - component: {fileID: 3885507738329274809}
+  m_Layer: 0
+  m_Name: Group WY
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1067115958041480239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773879044758761663}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4588429009544970771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3885507738329274809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773879044758761663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb73f5fd7d1d0e4897be5d370d1e3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  belongs_planet: {fileID: 6345044113055212709}
+  swaps:
+  - placeholders:
+    - {fileID: 2297202317987092719}
+    - {fileID: 1105062498118140671}
+    - {fileID: 4420082543725517588}
+    - {fileID: 5164646487455017532}
+  - placeholders:
+    - {fileID: 4702104631385391050}
+    - {fileID: 8582599059378470999}
+    - {fileID: 2516839321056942090}
+    - {fileID: 8413869592281321669}
+  cutPieces: []
+  rotationAngle: 90
+  animationDuration: 2
 --- !u!1 &1825230190118994697
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,8 +1025,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 3366725957586442729}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &3826703555507213122
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -973,8 +1098,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 4340831522304950110}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &91717575257412449
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1044,8 +1171,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8504517904651001601}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &7777828484235938644
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1288,7 +1417,7 @@ GameObject:
   - component: {fileID: 6120101847456358047}
   m_Layer: 6
   m_Name: Detector B
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1320,8 +1449,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 3885507738329274809}
+  - {fileID: 1690995474930002135}
+  _Directions:
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &6120101847456358047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1391,8 +1524,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5862370416176768376}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &572664577959441733
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1462,8 +1597,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5857809705094052990}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &6968163098987834596
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1582,8 +1719,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8334290931362252471}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &6893803251373574326
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1702,8 +1841,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 4340831522304950110}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &7223445342008790218
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1788,7 +1929,7 @@ GameObject:
   - component: {fileID: 219374212981762267}
   m_Layer: 6
   m_Name: Detector R
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1820,8 +1961,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 3885507738329274809}
+  - {fileID: 9127304763720215114}
+  _Directions:
+  - {x: 0, y: 0, z: 1}
+  - {x: 1, y: 0, z: 0}
 --- !u!64 &219374212981762267
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2098,8 +2243,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5862370416176768376}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &1945741454817837699
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2414,8 +2561,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5857809705094052990}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &5832795982547796087
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2485,8 +2634,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8504517904651001601}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &2018795528542382415
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2595,7 +2746,7 @@ GameObject:
   - component: {fileID: 1329240140525474538}
   m_Layer: 6
   m_Name: Detector G
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2627,8 +2778,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 3885507738329274809}
+  - {fileID: 1690995474930002135}
+  _Directions:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &1329240140525474538
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2698,8 +2853,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 3366725957586442729}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &4596139536042613047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2931,7 +3088,7 @@ GameObject:
   - component: {fileID: 5862926630672694016}
   m_Layer: 6
   m_Name: Detector Y
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2963,8 +3120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 9127304763720215114}
+  - {fileID: 1690995474930002135}
+  _Directions:
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &5862926630672694016
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3317,8 +3478,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8334290931362252471}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &199964056524907818
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3388,8 +3551,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 3366725957586442729}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &5183290664467103715
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3557,8 +3722,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5857809705094052990}
+  - {fileID: 3885507738329274809}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &3052819995438236955
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3628,8 +3795,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5862370416176768376}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &8442062020113602256
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3652,6 +3821,65 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4fd9d85b50e99664a9af688513404d4c, type: 2}
+--- !u!1 &5931790525730720319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4004964993023263416}
+  - component: {fileID: 9127304763720215114}
+  m_Layer: 0
+  m_Name: Group BG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4004964993023263416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931790525730720319}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4588429009544970771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9127304763720215114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931790525730720319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb73f5fd7d1d0e4897be5d370d1e3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  belongs_planet: {fileID: 6345044113055212709}
+  swaps:
+  - placeholders:
+    - {fileID: 6336484069437471887}
+    - {fileID: 5164646487455017532}
+    - {fileID: 3307911106680319558}
+    - {fileID: 1105062498118140671}
+  - placeholders:
+    - {fileID: 7856544053482355061}
+    - {fileID: 7309716316867754762}
+    - {fileID: 7343866952919004483}
+    - {fileID: 3948641713357819664}
+  cutPieces: []
+  rotationAngle: 90
+  animationDuration: 2
 --- !u!1 &6179388078910437431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3772,8 +4000,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8504517904651001601}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &2363601918804700964
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3965,8 +4195,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 5862370416176768376}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &5030173754458702040
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4036,8 +4268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 4340831522304950110}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &2007123884384018018
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4328,8 +4562,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 4340831522304950110}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &4203368645937380532
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4655,8 +4891,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8334290931362252471}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &3249444820988000511
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4775,8 +5013,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 3366725957586442729}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
 --- !u!64 &1319408540683797583
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4861,7 +5101,7 @@ GameObject:
   - component: {fileID: 4058306585515680438}
   m_Layer: 6
   m_Name: Detector W
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4893,8 +5133,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 9127304763720215114}
+  - {fileID: 1690995474930002135}
+  _Directions:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &4058306585515680438
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5247,7 +5491,7 @@ GameObject:
   - component: {fileID: 517472030392744942}
   m_Layer: 6
   m_Name: Detector O
-  m_TagString: NoRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5279,8 +5523,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708c8c6569526d48a153e3539583a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedGroups: []
-  _Directions: []
+  affectedGroups:
+  - {fileID: 3885507738329274809}
+  - {fileID: 9127304763720215114}
+  _Directions:
+  - {x: 0, y: 0, z: -1}
+  - {x: 1, y: 0, z: 0}
 --- !u!64 &517472030392744942
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5350,8 +5598,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8334290931362252471}
+  - {fileID: 1690995474930002135}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
 --- !u!64 &1625282277563649811
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5567,8 +5817,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedGroups:
   - {fileID: 8504517904651001601}
+  - {fileID: 9127304763720215114}
   _Directions:
   - {x: 1, y: 0, z: 0}
+  - {x: 1, y: 0, z: 1}
 --- !u!64 &3222965671812892782
 MeshCollider:
   m_ObjectHideFlags: 0
