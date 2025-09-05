@@ -48,6 +48,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeholder: {fileID: 0}
   pieceType: Edge
+  groundHeight: 1
+  perlinSeed: 5000
+  perlinScale: 4
+  perlinDetail: 4
+  attenuationHeight: 50
+  attenuationMax: 0.5
+  attenuationPower: 4
+  attenuationWidth: 1.8
 --- !u!33 &8738330358394522156
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -55,7 +63,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8589060848245777102}
-  m_Mesh: {fileID: 4300000, guid: 969e4104a21c62f49999792317ad11f7, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 98626daa9360d0b429c52b678521a7ae, type: 2}
 --- !u!23 &7242585049468887975
 MeshRenderer:
   m_ObjectHideFlags: 0

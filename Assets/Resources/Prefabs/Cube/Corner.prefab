@@ -48,6 +48,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeholder: {fileID: 0}
   pieceType: Corner
+  groundHeight: 1
+  perlinSeed: 5000
+  perlinScale: 4
+  perlinDetail: 4
+  attenuationHeight: 25
+  attenuationMax: 0.4
+  attenuationPower: 4
+  attenuationWidth: 1.8
 --- !u!33 &190839147664619226
 MeshFilter:
   m_ObjectHideFlags: 0

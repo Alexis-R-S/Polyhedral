@@ -162,6 +162,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.Banane_Rotative.Polyhedral
+    Standalone: com.Banane-Rotative.Polyhedral
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -842,7 +843,7 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 259b7e7c-64e9-471a-926c-1d4c781b938e
   framebufferDepthMemorylessMode: 0
