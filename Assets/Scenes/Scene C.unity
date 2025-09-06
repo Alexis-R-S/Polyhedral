@@ -601,6 +601,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6393490913980597511, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
+        type: 3}
+      propertyPath: perlinSeed
+      value: 50000
+      objectReference: {fileID: 0}
     - target: {fileID: 6546304114592170858, guid: 2d732ddc3c9cd9b4485e7156b21cf3b2,
         type: 3}
       propertyPath: groundHeight

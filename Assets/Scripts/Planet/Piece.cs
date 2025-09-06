@@ -11,24 +11,15 @@ public class Piece : MonoBehaviour
     Biome biome;
     PieceMeshDeformer meshDeformer;
     MeshFilter mf;
+    public float perlinSeed = 5000;
 
     [SerializeField] int groundHeight = 1;
-
-    [Header("Perlin noise")]
-    [SerializeField] float perlinSeed = 5000;
-    [SerializeField] float perlinScale = 4;
-    [SerializeField] int perlinDetail = 10;
-
-    [Header("Shape attenuation")]
-    [SerializeField] int attenuationHeight = 2;
-    [SerializeField] float attenuationMax = 1.5f;
-    [SerializeField] float attenuationPower = 4;
-    [SerializeField] float attenuationWidth = 3;
 
     // Initialize this piece
     public void Init()
     {
         biome = new Biome();
+        perlinSeed = Random.Range(10000f, 10000000f);
 
         mf = GetComponent<MeshFilter>();
         FileLoader.LoadMeshInfo(placeholder.belongs_planet.Type, pieceType, out MeshInfo meshInfo);
@@ -36,6 +27,7 @@ public class Piece : MonoBehaviour
 
         DeformMesh();
 
+        // Debug code to find vertex index
         if (gameObject.CompareTag("Test ray caster"))
         {
             Mesh m = FileLoader.LoadBaseMesh(placeholder.belongs_planet.Type, pieceType);

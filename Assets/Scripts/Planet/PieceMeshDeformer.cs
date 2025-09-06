@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PieceMeshDeformer
 {
     public const float HEIGHT_UNIT = 1f;
+    public const float SEED_MODULO = 1000f;
     MeshInfo meshInfo;
 
 
@@ -39,7 +38,7 @@ public class PieceMeshDeformer
             plane_XY = getXYFromPlane(verts[i]);
 
             float attenuation = gaussDistrib(distanceToCenter(cornersProj, centerProj, plane_XY), perlinOpt);
-            float perlin_height = perlinNoise(plane_XY, perlinSeed, perlinOpt, 1);
+            float perlin_height = perlinNoiseFractalAt(plane_XY, perlinSeed, perlinOpt, 5);
             verts[i] = setHeightToPlane(verts[i], perlin_height * attenuation * groundHeight * HEIGHT_UNIT);
         }
 
@@ -109,15 +108,30 @@ public class PieceMeshDeformer
 
         return distance;
     }
-    
+
     // Gauss distribution centered on 0 (with a maximum)
     private float gaussDistrib(float x, PerlinOpt perlinOpt)
     {
         return Mathf.Min(perlinOpt.height * Mathf.Exp(-Mathf.Pow(x * perlinOpt.width, perlinOpt.power)), perlinOpt.max);
     }
 
-    private float perlinNoise(Vector2 coords, float seed, PerlinOpt perlinOpt, int detail)
+    // Return the fractal Perlin noise at the given coordinates
+    private float perlinNoiseFractalAt(Vector2 coords, float seed, PerlinOpt perlinOpt, int detail)
     {
-        return Mathf.PerlinNoise(coords.x * perlinOpt.frequencies[0] + seed, coords.y * perlinOpt.frequencies[0] + seed); // TODO
+        int depth = Mathf.Min(detail, perlinOpt.detail);    // Limit depth to available options
+        float pointHeight = 0;
+
+        for (int i = 0; i < depth; i++)
+        {
+            pointHeight += perlinNoiseAt(coords, seed, perlinOpt.frequencies[i], perlinOpt.amplitudes[i]);
+        }
+        
+        return pointHeight;
+    }
+
+    // Return the Perlin noise at the given coordinates
+    private float perlinNoiseAt(Vector2 coords, float seed, float freq, float amp)
+    {
+        return amp * Mathf.PerlinNoise(coords.x * freq + seed % SEED_MODULO + SEED_MODULO, coords.y * freq + (5 * seed % SEED_MODULO) + SEED_MODULO);
     }
 } 
