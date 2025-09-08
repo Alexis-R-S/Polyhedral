@@ -6,6 +6,7 @@ public class PieceMeshDeformer
 {
     public const float HEIGHT_UNIT = 1f;
     public const float SEED_MODULO = 1000f;
+    public const float SLOPE_CALCULATION_DISTANCE = 0.01f; // Distance used to calculate slope for erosion
     MeshInfo meshInfo;
 
 
@@ -22,6 +23,10 @@ public class PieceMeshDeformer
     // Deform the given mesh knowing the height of the ground
     public void Deform(Mesh mesh, int groundHeight, float perlinSeed, PerlinOpt perlinOpt)
     {
+        // TODO: detail controlled by smoothness of the piece
+        // TODO: optimize by caching projections and distances? (AI suggestion)
+        // TODO: erosion
+
         Vector3[] verts = mesh.vertices;
 
         // Calculate coordinates of corners on the 2D mesh
@@ -38,8 +43,8 @@ public class PieceMeshDeformer
             plane_XY = getXYFromPlane(verts[i]);
 
             float attenuation = gaussDistrib(distanceToCenter(cornersProj, centerProj, plane_XY), perlinOpt);
-            float perlin_height = perlinNoiseFractalAt(plane_XY, perlinSeed, perlinOpt, 5);
-            verts[i] = setHeightToPlane(verts[i], perlin_height * attenuation * groundHeight * HEIGHT_UNIT);
+            float eroded_perlin_height = erosionAt(plane_XY, perlinSeed, perlinOpt, 5, 0.1f, 0.01f);
+            verts[i] = setHeightToPlane(verts[i], eroded_perlin_height * attenuation * groundHeight * HEIGHT_UNIT);
         }
 
 
@@ -125,7 +130,7 @@ public class PieceMeshDeformer
         {
             pointHeight += perlinNoiseAt(coords, seed, perlinOpt.frequencies[i], perlinOpt.amplitudes[i]);
         }
-        
+
         return pointHeight;
     }
 
@@ -134,4 +139,21 @@ public class PieceMeshDeformer
     {
         return amp * Mathf.PerlinNoise(coords.x * freq + seed % SEED_MODULO + SEED_MODULO, coords.y * freq + (5 * seed % SEED_MODULO) + SEED_MODULO);
     }
-} 
+
+    // Slope-based erosion at the given coordinates
+    private float erosionAt(Vector2 coords, float seed, PerlinOpt perlinOpt, int detail, float slopeTreshold, float erosionFactor)
+    {
+        float height = perlinNoiseFractalAt(coords, seed, perlinOpt, detail);
+        Vector2 height_dl = new Vector2(
+            perlinNoiseFractalAt(new Vector2(coords.x + SLOPE_CALCULATION_DISTANCE, coords.y), seed, perlinOpt, detail),
+            perlinNoiseFractalAt(new Vector2(coords.x, coords.y + SLOPE_CALCULATION_DISTANCE), seed, perlinOpt, detail)
+        );
+        float slope = ((height_dl - new Vector2(height, height)) / SLOPE_CALCULATION_DISTANCE).magnitude;
+
+        if (slope > slopeTreshold)
+        {
+            height -= (slope - slopeTreshold) * erosionFactor;
+        }
+        return height;
+    }
+}
