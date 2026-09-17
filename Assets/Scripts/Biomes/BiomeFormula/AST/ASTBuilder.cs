@@ -117,6 +117,10 @@ namespace Polyhedral.FastFormula.AST
                     tempNodeA = astStack.Pop();
                     return new EqualityASTNode(astStack.Pop(), tempNodeA);
 
+                case "^":
+                    tempNodeA = astStack.Pop();
+                    return new ExponentASTNode(astStack.Pop(), tempNodeA);
+
                 default:
                     throw new ArgumentException($"Unrecognized token {token}");
             }
