@@ -5,6 +5,7 @@ namespace Polyhedral.FastFormula.ShuntingYard
         Number,
         Operator,
         LeftParen,
-        RightParen
+        RightParen,
+        Variable,
     }
 }

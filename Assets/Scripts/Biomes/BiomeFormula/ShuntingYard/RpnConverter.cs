@@ -33,6 +33,10 @@ namespace Polyhedral.FastFormula.ShuntingYard
                     case TokenType.Number:
                         output.Add(token);
                         break;
+
+                    case TokenType.Variable:
+                        output.Add(token);
+                        break;
                     
                     case TokenType.Operator:
                         while (operators.Count > 0 &&

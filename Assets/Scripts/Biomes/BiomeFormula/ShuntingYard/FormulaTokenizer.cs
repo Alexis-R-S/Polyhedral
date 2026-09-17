@@ -30,6 +30,13 @@ namespace Polyhedral.FastFormula.ShuntingYard
                     continue;
                 }
 
+                // Variables
+                if (char.IsLetter(c) || c == '_')
+                {
+                    tokens.Add(new FormulaToken(TokenType.Variable, TokenizeVariable(expression, ref i)));
+                    continue;
+                }
+
                 // Operators
                 if ("+-*/^><=".Contains(c))
                 {
@@ -71,6 +78,26 @@ namespace Polyhedral.FastFormula.ShuntingYard
             }
 
             return sb.ToString();
+        }
+
+        private static string TokenizeVariable(string expression, ref int i)
+        {
+            StringBuilder sb = new();
+
+            while (i < expression.Length &&
+                   (char.IsLetterOrDigit(expression[i]) || expression[i] == '_'))
+            {
+                sb.Append(expression[i]);
+                i++;
+            }
+            string variableName = sb.ToString();
+
+            if (EnvironmentalConditions.getGetter(variableName, out Func<EnvironmentalConditions, float> _))
+            {
+                return variableName;
+            }
+
+            throw new FormatException($"Unexpected string {variableName}");
         }
     }
 }
