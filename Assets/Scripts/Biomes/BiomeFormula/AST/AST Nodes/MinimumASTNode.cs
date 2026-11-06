@@ -1,23 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Polyhedral.FastFormula.AST
 {
     public class MinimumASTNode : ASTNode
     {
-        ASTNode a, b;
+        IEnumerable<ASTNode> nodes;
 
         public override float Eval(EnvironmentalConditions env)
         {
-            return Mathf.Min(a.Eval(env), b.Eval(env));
+            return nodes.Min((ASTNode node) => node.Eval(env));
         }
 
         /// <summary>
         /// This AST node evaluates to: min(nodeA, nodeB)
         /// </summary>
-        public MinimumASTNode(ASTNode nodeA, ASTNode nodeB)
+        public MinimumASTNode(IEnumerable<ASTNode> nodes)
         {
-            a = nodeA;
-            b = nodeB;
+            if (!nodes.Any())
+            {
+                throw new FormatException("'Minimum' function requires at least 1 argument");
+            }
+            this.nodes = nodes;
         }
     }
 }

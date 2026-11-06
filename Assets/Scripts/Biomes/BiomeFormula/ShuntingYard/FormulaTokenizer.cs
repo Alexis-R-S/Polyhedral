@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Polyhedral.FastFormula.AST;
 using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace Polyhedral.FastFormula.ShuntingYard
@@ -33,7 +34,7 @@ namespace Polyhedral.FastFormula.ShuntingYard
                 // Variables
                 if (char.IsLetter(c) || c == '_')
                 {
-                    tokens.Add(new FormulaToken(TokenType.Variable, TokenizeVariable(expression, ref i)));
+                    tokens.Add(TokenizeFunctionOrVariable(expression, ref i));
                     continue;
                 }
 
@@ -60,6 +61,13 @@ namespace Polyhedral.FastFormula.ShuntingYard
                     continue;
                 }
 
+                if (c == ',')
+                {
+                    tokens.Add(new FormulaToken(TokenType.Comma, ","));
+                    i++;
+                    continue;
+                }
+
                 throw new FormatException($"Unexpected character {c}");
             }
 
@@ -80,7 +88,7 @@ namespace Polyhedral.FastFormula.ShuntingYard
             return sb.ToString();
         }
 
-        private static string TokenizeVariable(string expression, ref int i)
+        private static FormulaToken TokenizeFunctionOrVariable(string expression, ref int i)
         {
             StringBuilder sb = new();
 
@@ -94,7 +102,12 @@ namespace Polyhedral.FastFormula.ShuntingYard
 
             if (EnvironmentalConditions.getGetter(variableName, out Func<EnvironmentalConditions, float> _))
             {
-                return variableName;
+                return new FormulaToken(TokenType.Variable, variableName);
+            }
+
+            if (FunctionMapper.hasFunction(variableName))
+            {
+                return new FormulaToken(TokenType.Function, variableName);
             }
 
             throw new FormatException($"Unexpected string {variableName}");

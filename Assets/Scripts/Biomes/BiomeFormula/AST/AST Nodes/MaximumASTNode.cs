@@ -1,23 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Polyhedral.FastFormula.AST
 {
     public class MaximumASTNode : ASTNode
     {
-        ASTNode a, b;
+        IEnumerable<ASTNode> nodes;
 
         public override float Eval(EnvironmentalConditions env)
         {
-            return Mathf.Max(a.Eval(env), b.Eval(env));
+            return nodes.Max((ASTNode node) => node.Eval(env));
         }
 
         /// <summary>
         /// This AST node evaluates to: max(nodeA, nodeB)
         /// </summary>
-        public MaximumASTNode(ASTNode nodeA, ASTNode nodeB)
+        public MaximumASTNode(IEnumerable<ASTNode> nodes)
         {
-            a = nodeA;
-            b = nodeB;
+            if (!nodes.Any())
+            {
+                throw new FormatException("'Maximum' function requires at least 1 argument");
+            }
+            this.nodes = nodes;
         }
     }
 }

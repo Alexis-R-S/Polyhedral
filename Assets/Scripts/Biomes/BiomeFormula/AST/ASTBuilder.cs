@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Polyhedral.FastFormula.ShuntingYard;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Polyhedral.FastFormula.AST
@@ -12,10 +13,14 @@ namespace Polyhedral.FastFormula.AST
         /// <summary>
         /// Convert a reverse polish notation to an AST
         /// </summary>
-        /// <param name="rpn">Reverse polish notation tokens</param>
+        /// <param name="tokens">Reverse polish notation tokens</param>
         /// <returns></returns>
         public ASTNode FromRPN(List<FormulaToken> tokens)
         {
+            // If token is operand: push onto stack
+            // If token is operator: pop X from stack, build, then push result to stack
+            // Return pop stack
+
             if (tokens == null || tokens.Count == 0)
             {
                 throw new ArgumentException("Tokens cannot be null or empty");
@@ -35,10 +40,6 @@ namespace Polyhedral.FastFormula.AST
         /// </summary>
         private ASTNode CreateNode(FormulaToken token, Stack<ASTNode> astStack)
         {
-            // If token is operand: push onto stack
-        
-            // If token is operator: pop X from stack, build, then push result to stack
-            // Return pop stack
             switch (token.Type)
             {
                 case TokenType.Number:
@@ -49,6 +50,9 @@ namespace Polyhedral.FastFormula.AST
 
                 case TokenType.Operator:
                     return CreateOperatorNode(token.Value, astStack);
+
+                case TokenType.Function:
+                    return CreateFunctionNode(token, astStack);
                 
                 default:
                     throw new ArgumentException($"Unsupported AST token type {token.Type}");
@@ -57,13 +61,13 @@ namespace Polyhedral.FastFormula.AST
 
         private ASTNode CreateConstantNode(string token)
         {
-            if (float.TryParse(token, out float parsedToken))
+            if (float.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out float parsedToken))
             {
                 return new ConstantASTNode(parsedToken);
             }
             else
             {
-                throw new FormatException();
+                throw new FormatException($"Token {token} cannot be parsed into a float.");
             }
         }
 
@@ -126,18 +130,24 @@ namespace Polyhedral.FastFormula.AST
             }
         }
 
-        private ASTNode CreateFunctionNode(string token, Stack<ASTNode> astStack)
+        private ASTNode CreateFunctionNode(FormulaToken token, Stack<ASTNode> astStack)
         {
-            switch (token)
+            var functionArguments = new ASTNode[token.NumberArgs];
+            for (int i = functionArguments.Length - 1; i >= 0; i--)
+            {
+                functionArguments[i] = astStack.Pop();
+            }
+
+            switch (token.Value)
             {
                 case "max":
-                        return new MaximumASTNode(astStack.Pop(), astStack.Pop());
+                    return new MaximumASTNode(functionArguments);
 
                 case "min":
-                    return new MinimumASTNode(astStack.Pop(), astStack.Pop());
+                    return new MinimumASTNode(functionArguments);
                 
                 default:
-                    throw new ArgumentException($"Unrecognized token {token}");
+                    throw new ArgumentException($"Unrecognized function {token.Value}");
             }
         }
     }

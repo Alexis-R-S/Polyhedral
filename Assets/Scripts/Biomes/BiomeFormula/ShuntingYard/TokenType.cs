@@ -7,5 +7,7 @@ namespace Polyhedral.FastFormula.ShuntingYard
         LeftParen,
         RightParen,
         Variable,
+        Function,
+        Comma,
     }
 }
