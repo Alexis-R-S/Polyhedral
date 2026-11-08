@@ -5,8 +5,21 @@ namespace Polyhedral.FastFormula.ShuntingYard
 {
     public static class RpnConverter
     {
-        // Precedence indicates operation priority, higher precedence means higher priority
-        private static readonly Dictionary<string, int> Precedence =
+        /// <summary>
+        /// Value stored in <see cref="FormulaToken.NumberArgs"/> for an operator token used as a prefix (unary) operator.
+        /// </summary>
+        public const int UnaryArgumentCount = 1;
+
+        /// <summary>
+        /// Value stored in <see cref="FormulaToken.NumberArgs"/> for an operator token used as an infix (binary) operator.
+        /// </summary>
+        public const int BinaryArgumentCount = 2;
+
+        // Unary minus binds tighter than * and / but looser than ^, so that -2^2 == -(2^2).
+        private const int UnaryPrecedence = 4;
+
+        // Higher precedence means higher priority.
+        private static readonly Dictionary<string, int> BinaryPrecedence =
             new Dictionary<string, int>
             {
                 { "=", 1 },
@@ -16,138 +29,206 @@ namespace Polyhedral.FastFormula.ShuntingYard
                 { "-", 2 },
                 { "*", 3 },
                 { "/", 3 },
-                { "^", 4 }
+                { "^", 5 }
             };
 
-        // RightAssociative indicates which operators are right associative, meaning they group from the right
+        // Operators that group from the right: 2^3^2 == 2^(3^2)
         private static readonly HashSet<string> RightAssociative = new() { "^" };
 
         /// <summary>
-        /// Rpn stands for Reverse Polish Notation
+        /// State kept for every open parenthesis.
         /// </summary>
-        public static List<FormulaToken> ToRpn(List<FormulaToken> tokens)
+        private sealed class ParenFrame
         {
-            List<FormulaToken> output = new();
-            Stack<FormulaToken> operators = new();
-            Stack<bool> parenIsCall = new();    // Keeps track of whether the current parenthesis is a function call or not
-            Stack<int> argCount = new();          // Keeps track of the number of arguments for each function call
+            public readonly bool IsCall;   // true for "f(", false for a plain "("
+            public int Commas;             // argument separators seen so far (calls only)
+
+            public ParenFrame(bool isCall) => IsCall = isCall;
+        }
+
+        /// <summary>
+        /// Converts infix tokens to Reverse Polish Notation (RPN) using the shunting-yard algorithm.
+        /// Structural problems (missing operands, empty arguments, mismatched parentheses...) are
+        /// reported as <see cref="FormatException"/> with the offending token and its index.
+        /// </summary>
+        /// <remarks>
+        /// Side effect: sets <see cref="FormulaToken.NumberArgs"/> on operator and function tokens.
+        /// </remarks>
+        public static List<FormulaToken> ToRpn(IReadOnlyList<FormulaToken> tokens)
+        {
+            if (tokens == null) throw new ArgumentNullException(nameof(tokens));
+            if (tokens.Count == 0) throw new FormatException("Empty expression");
+
+            var output = new List<FormulaToken>(tokens.Count);
+            var operators = new Stack<FormulaToken>();
+            var frames = new Stack<ParenFrame>();
+
+            // True whenever the grammar requires an operand (or prefix operator / '(' / function) next:
+            // at the start, after an operator, after '(' and after ','.
+            bool expectOperand = true;
             FormulaToken previous = null;
 
-            foreach (FormulaToken token in tokens)
+            for (int i = 0; i < tokens.Count; i++)
             {
+                FormulaToken token = tokens[i];
+
+                // A function name must be immediately followed by '('.
+                if (previous != null && previous.Type == TokenType.Function && token.Type != TokenType.LeftParen)
+                {
+                    throw Error($"Function {previous.Value} is missing its argument list", token, i);
+                }
+
                 switch (token.Type)
                 {
                     case TokenType.Number:
                     case TokenType.Variable:
+                        if (!expectOperand) throw Error("Unexpected operand", token, i);
                         output.Add(token);
+                        expectOperand = false;
                         break;
-                    
+
                     case TokenType.Operator:
-                        while (operators.Count > 0 &&
-                            operators.Peek().Type == TokenType.Operator)
+                        if (expectOperand)
                         {
-                            int topPrec = Precedence[operators.Peek().Value];
-                            int curPrec = Precedence[token.Value];
-                            bool shouldPop = RightAssociative.Contains(token.Value)
-                                ? topPrec > curPrec
-                                : topPrec >= curPrec;
-                            if (!shouldPop) break;
-                            output.Add(operators.Pop());
-                        }
-                        operators.Push(token);
-                        break;
-
-                    case TokenType.LeftParen:
-                        bool isCall = operators.Count > 0 && operators.Peek().Type == TokenType.Function;
-                        operators.Push(token);
-                        parenIsCall.Push(isCall);
-                        if (isCall)
-                        {
-                            argCount.Push(0); // Start counting arguments for this function call
-                        }
-                        break;
-
-                    case TokenType.RightParen:
-                        while (operators.Count > 0 &&
-                            operators.Peek().Type != TokenType.LeftParen)
-                        {
-                            output.Add(operators.Pop());
-                        }
-
-                        if (operators.Count == 0)
-                            throw new FormatException("Mismatched parentheses");
-
-                        operators.Pop(); // remove '('
-
-                        if (parenIsCall.Pop())
-                        {
-                            int commas = argCount.Pop();
-                            bool empty = previous.Type == TokenType.LeftParen;
-                            if (previous.Type == TokenType.Comma    // Prevent calls such as: f(1,)
-                                || previous.Type == TokenType.Function
-                            )
+                            // Prefix position: only unary minus / plus make sense.
+                            if (token.Value == "-")
                             {
-                                throw new FormatException("Empty function argument");
+                                token.NumberArgs = UnaryArgumentCount;
+                                operators.Push(token); // prefix operators never pop anything
+                            }
+                            else if (token.Value != "+")
+                            {
+                                throw Error("Operator is missing its left operand", token, i);
+                            }
+                            // unary plus is a no-op: drop it
+                        }
+                        else
+                        {
+                            if (!BinaryPrecedence.TryGetValue(token.Value, out int curPrec))
+                            {
+                                throw Error("Unknown operator", token, i);
                             }
 
-                            FormulaToken funcToken = operators.Pop();
-                            funcToken.NumberArgs = empty ? 0 : commas + 1;
-                            output.Add(funcToken);
-                        }
-                        else if (previous.Type == TokenType.LeftParen)
-                        {
-                            throw new FormatException("Parentheses encompass empty expression");
+                            token.NumberArgs = BinaryArgumentCount;
+                            bool rightAssoc = RightAssociative.Contains(token.Value);
+
+                            while (operators.Count > 0 && operators.Peek().Type == TokenType.Operator)
+                            {
+                                int topPrec = PrecedenceOf(operators.Peek());
+                                bool shouldPop = rightAssoc ? topPrec > curPrec : topPrec >= curPrec;
+                                if (!shouldPop) break;
+                                output.Add(operators.Pop());
+                            }
+
+                            operators.Push(token);
+                            expectOperand = true;
                         }
                         break;
 
                     case TokenType.Function:
+                        if (!expectOperand) throw Error("Unexpected function", token, i);
                         operators.Push(token);
+                        break; // still expecting '('
+
+                    case TokenType.LeftParen:
+                        if (!expectOperand) throw Error("Unexpected '('", token, i);
+                        bool isCall = previous != null && previous.Type == TokenType.Function;
+                        operators.Push(token);
+                        frames.Push(new ParenFrame(isCall));
+                        break; // still expecting an operand (or ')' for an empty call)
+
+                    case TokenType.RightParen:
+                    {
+                        if (frames.Count == 0) throw Error("Mismatched parentheses", token, i);
+
+                        ParenFrame frame = frames.Peek();
+                        bool emptyCall = false;
+                        if (expectOperand)
+                        {
+                            // Only legal as "f()".
+                            emptyCall = frame.IsCall && previous.Type == TokenType.LeftParen;
+                            if (!emptyCall)
+                            {
+                                throw Error(previous.Type == TokenType.LeftParen
+                                    ? "Parentheses encompass empty expression"
+                                    : previous.Type == TokenType.Comma
+                                        ? "Empty function argument"
+                                        : "Missing operand", token, i);
+                            }
+                        }
+
+                        PopUntilLeftParen(operators, output, token, i);
+                        operators.Pop(); // remove '('
+                        frames.Pop();
+
+                        if (frame.IsCall)
+                        {
+                            FormulaToken function = operators.Pop();
+                            function.NumberArgs = emptyCall ? 0 : frame.Commas + 1;
+                            output.Add(function);
+                        }
+
+                        expectOperand = false;
                         break;
+                    }
 
                     case TokenType.Comma:
-                        while (operators.Count > 0 && operators.Peek().Type != TokenType.LeftParen)
+                        if (frames.Count == 0 || !frames.Peek().IsCall)
                         {
-                            output.Add(operators.Pop());
+                            throw Error("Misplaced argument separator", token, i);
                         }
+                        if (expectOperand) throw Error("Empty function argument", token, i);
 
-                        if (operators.Count == 0) {
-                            throw new FormatException("Mismatched parentheses"); 
-                        }
-                        if (parenIsCall.Count == 0 || !parenIsCall.Peek()) {
-                            throw new FormatException("Misplaced argument separator");
-                        }
-                        if (previous ==null
-                            || previous.Type == TokenType.LeftParen
-                            || previous.Type == TokenType.Comma
-                            || previous.Type == TokenType.Function    
-                        )
-                        {
-                            throw new FormatException("Empty function argument");
-                        }
-                        argCount.Push(argCount.Pop() +1);
+                        PopUntilLeftParen(operators, output, token, i);
+                        frames.Peek().Commas++;
+                        expectOperand = true;
                         break;
+
                     default:
-                        throw new FormatException($"Unhandled token type {token.Type}");
+                        throw Error($"Unhandled token type {token.Type}", token, i);
                 }
+
                 previous = token;
             }
 
+            if (frames.Count > 0)
+            {
+                throw new FormatException("Mismatched parentheses: missing ')'");
+            }
+            if (expectOperand)
+            {
+                throw new FormatException(
+                    $"Expression ends unexpectedly after '{previous.Value}' (missing operand or argument list)");
+            }
+
+            // Only operators can be left at this point.
             while (operators.Count > 0)
             {
-                FormulaToken top = operators.Pop();
-
-                if (top.Type == TokenType.LeftParen) {
-                    throw new FormatException("Mismatched parentheses");
-                }
-                if (top.Type == TokenType.Function)
-                {
-                    throw new FormatException($"Function {top.Value} is missing its argument list.");
-                }
-
-                output.Add(top);
+                output.Add(operators.Pop());
             }
 
             return output;
+        }
+
+        private static int PrecedenceOf(FormulaToken op)
+        {
+            return op.NumberArgs == UnaryArgumentCount ? UnaryPrecedence : BinaryPrecedence[op.Value];
+        }
+
+        private static void PopUntilLeftParen(
+            Stack<FormulaToken> operators, List<FormulaToken> output, FormulaToken token, int index)
+        {
+            while (operators.Count > 0 && operators.Peek().Type != TokenType.LeftParen)
+            {
+                output.Add(operators.Pop());
+            }
+
+            if (operators.Count == 0) throw Error("Mismatched parentheses", token, index);
+        }
+
+        private static FormatException Error(string message, FormulaToken token, int index)
+        {
+            return new FormatException($"{message} (token '{token.Value}' at index {index})");
         }
     }
 }
